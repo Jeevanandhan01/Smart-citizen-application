@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Management</title>
+    <style>
+        body {
+           
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        main {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            border-radius: 100px 100px 100px 100px;
+        }
+
+        form {
+            display: grid;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            border: 1px solid rebeccapurple;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #2980b9;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .complaint-list {
+            margin-top: 20px;
+        }
+
+        .complaint {
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #3498db;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .filter {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        select {
+            font-size: 16px;
+            margin-left: 10px;
+            padding: 10px;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus {
+            border-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header>
+            Complaint Management System
+        </header>
+
+        <form id="complaintForm">
+            <label for="complaintType">Complaint Type:</label>
+            <select id="complaintType" name="complaintType" required>
+                <option value="Noise">Noise</option>
+                <option value="Garbage">Garbage</option>
+                <option value="StreetLights">Street Lights</option>
+                <!-- Add more complaint types as needed -->
+            </select>
+
+            <label for="complaintDescription">Complaint Description:</label>
+            <textarea id="complaintDescription" name="complaintDescription" rows="4" required></textarea>
+
+            <label for="image">Attach Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <button type="button" onclick="submitComplaint()">Submit Complaint</button>
+        </form>
+
+        <!-- Filter Authorities -->
+        <div class="filter">
+            <label for="authorityFilter">Filter by Authority:</label>
+            <select id="authorityFilter" name="authorityFilter" onchange="filterComplaints()">
+                <option value="all">All Authorities</option>
+                <option value="authority1">Authority 1</option>
+                <option value="authority2">Authority 2</option>
+                <!-- Add more authorities as needed -->
+            </select>
+        </div>
+
+        <!-- Complaint List -->
+        <div class="complaint-list" id="complaintList">
+            <!-- Complaints will be dynamically added here -->
+        </div>
+    </main>
+
+    <script>
+        // Dummy function to simulate complaint submission
+        function submitComplaint() {
+            const complaintType = document.getElementById('complaintType').value;
+            const complaintDescription = document.getElementById('complaintDescription').value;
+            const imageInput = document.getElementById('image');
+            const image = imageInput.files[0];
+
+            // For demonstration purposes, let's display the complaint in the complaint list
+            displayComplaint(complaintType, complaintDescription, image);
+
+            // Clear the form
+            document.getElementById('complaintForm').reset();
+        }
+
+        // Dummy function to display a complaint in the complaint list
+        function displayComplaint(type, description, image) {
+            const complaintList = document.getElementById('complaintList');
+
+            const complaintDiv = document.createElement('div');
+            complaintDiv.classList.add('complaint');
+
+            const complaintType = document.createElement('p');
+            complaintType.innerText = `Type: ${type}`;
+
+            const complaintDescription = document.createElement('p');
+            complaintDescription.innerText = `Description: ${description}`;
+
+            complaintDiv.appendChild(complaintType);
+            complaintDiv.appendChild(complaintDescription);
+
+            if (image) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(image);
+                complaintDiv.appendChild(img);
+            }
+
+            complaintList.appendChild(complaintDiv);
+        }
+
+        // Function to filter complaints based on selected authority
+        function filterComplaints() {
+            const authorityFilter = document.getElementById('authorityFilter').value;
+            const complaints = document.querySelectorAll('.complaint');
+
+            complaints.forEach(complaint => {
+                const complaintAuthority = complaint.getAttribute('data-authority');
+
+                if (authorityFilter === 'all' || complaintAuthority === authorityFilter) {
+                    complaint.style.display = 'block';
+                } else {
+                    complaint.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+       
