@@ -27,6 +27,12 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/responsive.css" rel="stylesheet" />
+    <style>
+      #targetElement {
+        height: 1000px;
+        background-color: lightblue;
+      }
+    </style>
   </head>
 
   <body>
@@ -58,8 +64,9 @@
                     >
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="service.html">Services</a>
+                    <a class="nav-link" href="#" onclick="scrollToElement(); return false;">Services</a>
                   </li>
+
                   <li class="nav-item">
                     <a class="nav-link" href="about.html"> About</a>
                   </li>
@@ -541,4 +548,10 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
     <!-- End Google Map -->
   </body>
+  <script>
+    function scrollToElement() {
+      var targetElement = document.getElementById('targetElement');
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
 </html>
