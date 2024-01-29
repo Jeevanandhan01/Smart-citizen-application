@@ -131,12 +131,7 @@
 
         <form id="complaintForm">
             <label for="complaintType">Complaint Type:</label>
-            <select id="complaintType" name="complaintType" required>
-                <option value="Noise">Noise</option>
-                <option value="Garbage">Garbage</option>
-                <option value="StreetLights">Street Lights</option>
-                <!-- Add more complaint types as needed -->
-            </select>
+            <input type="text" id="complaintType" name="complaintType" placeholder="Enter Complaint Type" required>
 
             <label for="complaintDescription">Complaint Description:</label>
             <textarea id="complaintDescription" name="complaintDescription" rows="4" required></textarea>
@@ -146,17 +141,6 @@
 
             <button type="button" onclick="submitComplaint()">Submit Complaint</button>
         </form>
-
-        <!-- Filter Authorities -->
-        <div class="filter">
-            <label for="authorityFilter">Filter by Authority:</label>
-            <select id="authorityFilter" name="authorityFilter" onchange="filterComplaints()">
-                <option value="all">All Authorities</option>
-                <option value="authority1">Authority 1</option>
-                <option value="authority2">Authority 2</option>
-                <!-- Add more authorities as needed -->
-            </select>
-        </div>
 
         <!-- Complaint List -->
         <div class="complaint-list" id="complaintList">
